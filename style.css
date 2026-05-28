@@ -1,0 +1,113 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #000; color: #fff; font-family: Inter, Arial, sans-serif; overflow: hidden; }
+button { cursor: pointer; }
+.screen { position: fixed; inset: 0; display: none; opacity: 0; transition: opacity 450ms ease; }
+.screen.active { display: block; opacity: 1; }
+.hidden { display: none !important; }
+
+/* intentionally bad landing */
+.landing-screen { background: white; color: black; font-family: "Comic Sans MS", cursive, sans-serif; padding: 22px; }
+.ugly-card { border: 4px dashed blue; background: #fffbcc; width: min(600px, 90vw); margin: 70px auto; padding: 20px; text-align: center; box-shadow: 12px 12px 0 red; }
+.ugly-card h1 { color: purple; font-size: 32px; text-decoration: underline; }
+.bad-copy { color: green; font-size: 19px; }
+.ugly-card input { display: block; margin: 12px auto; width: 260px; padding: 8px; font-size: 20px; border: 2px inset #888; }
+.ugly-card button { padding: 9px 40px; font-size: 24px; background: #ddd; border: 4px outset #aaa; margin: 6px; }
+.ugly-card .ugly-secondary { font-size: 18px; padding: 8px 24px; background: #f4d7ff; }
+.ugly-card small { display: block; margin-top: 20px; color: #555; }
+
+.battle-screen { background: url("assets/images/backgrounds/sewer_battle.png") center/cover no-repeat; padding: 16px; }
+.battle-screen::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at center, rgba(0,0,0,.05), rgba(0,0,0,.72)); pointer-events:none; }
+.battle-hud { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border: 2px solid rgba(0, 230, 255, .45); background: rgba(0,0,0,.65); border-radius: 12px; font-weight: 700; letter-spacing: .06em; text-shadow: 0 0 10px #00eaff; }
+#battleTitle { color: #9ff; }
+.battle-stage { position: relative; z-index: 1; height: 50vh; display: flex; align-items: center; justify-content: center; }
+.enemy-image { max-height: 42vh; max-width: 54vw; filter: drop-shadow(0 0 22px rgba(255,255,255,.35)); transition: transform 200ms ease, filter 200ms ease; }
+.enemy-image.enemy-turn { transform: scale(1.04); filter: drop-shadow(0 0 32px rgba(255,0,0,.75)); }
+.drone-image { position: absolute; top: 10%; right: 18%; width: 230px; filter: drop-shadow(0 0 15px cyan); animation: droneHover 900ms ease-in-out infinite alternate; }
+@keyframes droneHover { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+.enemy-name { position: absolute; bottom: 8px; text-align: center; font-size: 24px; font-weight: 800; text-shadow: 0 0 14px #000, 0 0 8px red; }
+.enemy-hp { position: absolute; bottom: -16px; width: min(620px, 80vw); height: 14px; border: 1px solid #fff; background: rgba(0,0,0,.7); }
+.enemy-hp span { display:block; height:100%; width:100%; background: linear-gradient(90deg,#ff3333,#ffb13b); transition: width .3s ease; }
+.battle-log { position: relative; z-index: 2; min-height: 74px; margin: 10px auto; width: min(1100px, 96vw); padding: 14px 18px; border: 2px solid rgba(255,255,255,.65); background: rgba(0,0,0,.76); border-radius: 12px; font-size: 18px; line-height: 1.45; }
+.party-row { position: relative; z-index: 2; display: flex; justify-content: center; gap: 14px; margin: 8px auto; }
+.party-card { width: 175px; border: 2px solid rgba(255,255,255,.35); border-radius: 14px; background: rgba(0,0,0,.74); padding: 8px; transition: all 200ms ease; }
+.party-card.active-turn { border-color: cyan; box-shadow: 0 0 22px cyan; transform: translateY(-5px); }
+.party-card.down { border-color: #ff2020; background: rgba(70,0,0,.9); filter: saturate(.6); }
+.party-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; background: #111; }
+.party-name { text-align:center; font-weight:800; margin-top:4px; }
+.bar { height: 10px; margin-top: 5px; background: #222; border: 1px solid #666; }
+.bar span { display:block; height:100%; transition:width .25s ease; }
+.hp span { background: #38ff65; }
+.mp span { background: #40a8ff; }
+.command-area { position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: min(980px, 96vw); margin: 8px auto; }
+.command-area button { min-width: 150px; padding: 12px 16px; border: 2px solid rgba(0,230,255,.65); border-radius: 10px; background: rgba(0,0,0,.76); color: #fff; font-size: 16px; font-weight: 700; box-shadow: 0 0 10px rgba(0,230,255,.18); }
+.command-area button:hover { background: rgba(0,80,90,.88); }
+.command-area button:disabled { opacity: .35; cursor: not-allowed; }
+
+.vn-screen { background: #000; }
+.vn-backdrop { position:absolute; inset:0; background: url("assets/images/backgrounds/sewer_vn.png") center/cover no-repeat; filter: brightness(.55); }
+.vn-characters { position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; gap: 8vw; padding-bottom: 170px; pointer-events:none; }
+.vn-characters img { max-height: 72vh; max-width: 34vw; object-fit: contain; filter: drop-shadow(0 0 18px rgba(0,0,0,.8)); }
+.vn-box { position:absolute; left: 50%; transform: translateX(-50%); bottom: 24px; width: min(1120px, 94vw); min-height: 140px; background: rgba(0,0,0,.82); border: 2px solid rgba(255,255,255,.75); border-radius: 18px; padding: 18px 22px; box-shadow: 0 0 24px rgba(0,230,255,.24); }
+.vn-speaker { font-size: 20px; font-weight: 900; color: #90f4ff; margin-bottom: 8px; }
+.vn-text { font-size: 22px; line-height: 1.45; }
+
+.victory-screen { background: radial-gradient(circle, #1e2a21, #020403); display:none; place-items:center; text-align:center; }
+.victory-screen.active { display:grid; }
+.victory-text { font-size: clamp(42px, 7vw, 94px); font-weight: 900; text-shadow: 0 0 18px #fff; }
+
+.gameover-screen { background: white; color: black; display:none; place-items:center; text-align:center; padding: 24px; }
+.gameover-screen.active { display:grid; }
+.gameover-screen h1 { font-size: clamp(62px, 12vw, 160px); margin:0; font-weight: 1000; text-shadow: 8px 8px 0 #b00020; letter-spacing:.08em; }
+.gameover-screen p { max-width: 900px; font-size: 18px; line-height:1.75; opacity:0; animation: fadeIn 2s ease forwards 1s; }
+@keyframes fadeIn { to { opacity:1; } }
+
+.tbc-screen { background:#000; display:none; place-items:center; text-align:center; }
+.tbc-screen.active { display:grid; }
+.tbc-screen h1 { font-size: clamp(30px, 6vw, 76px); line-height:1.25; }
+.tbc-screen span { color:#ff4b4b; }
+
+.leaderboard-screen { background: linear-gradient(135deg,#04070d,#0c1b24); display:none; place-items:center; }
+.leaderboard-screen.active { display:grid; }
+.leaderboard-panel { width:min(940px,94vw); background:rgba(0,0,0,.75); border:2px solid rgba(0,220,255,.6); border-radius:18px; padding:24px; box-shadow:0 0 35px rgba(0,220,255,.2); text-align:center; }
+table { width:100%; border-collapse:collapse; margin:18px 0; }
+th,td { border-bottom:1px solid rgba(255,255,255,.25); padding:10px; }
+th { color:#8df5ff; }
+.thanks { font-size:24px; }
+#returnLandingBtn { padding:12px 22px; border-radius:10px; border:1px solid #9ff; background:#071820; color:white; font-weight:800; }
+
+.video-overlay { position:fixed; inset:0; background:#000; z-index:20; display:grid; place-items:center; }
+.video-overlay video { width:100vw; height:100vh; object-fit:contain; }
+.fade-out { opacity:0 !important; }
+
+/* Final polish patch: smaller battle layout + hover descriptions */
+.battle-screen { padding: 10px; }
+.battle-hud { width: min(1000px, 94vw); margin: 0 auto; padding: 8px 14px; font-size: 14px; }
+.battle-stage { height: 43vh; }
+.enemy-image { max-height: 35vh; max-width: 46vw; }
+.drone-image { width: 185px; }
+.enemy-name { font-size: 20px; }
+.enemy-hp { width: min(560px, 72vw); height: 12px; }
+.battle-log { min-height: 60px; margin: 8px auto; width: min(960px, 92vw); padding: 11px 15px; font-size: 16px; }
+.party-row { gap: 10px; margin: 6px auto; }
+.party-card { width: 145px; padding: 6px; font-size: 13px; }
+.party-name { font-size: 14px; }
+.bar { height: 8px; }
+.hover-description {
+  position: relative;
+  z-index: 2;
+  width: min(900px, 92vw);
+  min-height: 28px;
+  margin: 5px auto 2px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 10px;
+  background: rgba(0,0,0,.7);
+  color: #d8fbff;
+  font-size: 14px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.hover-description.visible { opacity: 1; }
+.command-area { width: min(900px, 92vw); gap: 8px; margin: 5px auto; }
+.command-area button { min-width: 125px; padding: 9px 12px; font-size: 14px; }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>An Experimental Crossover Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <section id="landing" class="screen landing-screen active">
+      <div class="ugly-card">
+        <h1>An Experimental Crossover Game</h1>
+        <p class="bad-copy">this is gianfranco and marcus' rpg game pls enjoy</p>
+        <label for="playerName">enter name:</label>
+        <input id="playerName" maxlength="16" placeholder="Player" />
+        <button id="playBtn">PLAY</button>
+        <button id="leaderboardBtn" class="ugly-secondary">LEADERBOARD</button>
+        <small>leaderboard maybe works idk</small>
+      </div>
+    </section>
+
+    <section id="battleScreen" class="screen battle-screen">
+      <div class="battle-hud">
+        <div id="battleTitle">BATTLE</div>
+        <div>Time: <span id="timer">0.00</span>s</div>
+        <div>Turns: <span id="turnCounter">0</span></div>
+      </div>
+      <div class="battle-stage">
+        <img id="enemyImage" class="enemy-image" alt="Enemy" />
+        <img id="droneImage" class="drone-image hidden" src="assets/images/effects/missile_drone_battle.png" alt="Missile Drone" />
+        <div id="enemyName" class="enemy-name"></div>
+        <div id="enemyHpBar" class="enemy-hp"><span></span></div>
+      </div>
+      <div id="battleLog" class="battle-log">...</div>
+      <div id="partyRow" class="party-row"></div>
+      <div id="hoverDescription" class="hover-description"></div>
+      <div id="commandArea" class="command-area"></div>
+    </section>
+
+    <section id="vnScreen" class="screen vn-screen">
+      <div id="vnBackdrop" class="vn-backdrop"></div>
+      <div id="vnCharacters" class="vn-characters"></div>
+      <div id="vnBox" class="vn-box">
+        <div id="vnSpeaker" class="vn-speaker"></div>
+        <div id="vnText" class="vn-text"></div>
+      </div>
+    </section>
+
+    <section id="victoryScreen" class="screen victory-screen">
+      <div id="victoryText" class="victory-text">Victory!</div>
+    </section>
+
+    <section id="gameOverScreen" class="screen gameover-screen">
+      <h1>GAME OVER</h1>
+      <p id="gameOverWordSalad">
+        The transient proof of resistance has been severed from the imaginary axis.<br />
+        This failed observation dissolves beyond the recorded frame.<br />
+        Until the first door opens again, the abandoned variable returns to zero.
+      </p>
+    </section>
+
+    <section id="toBeContinuedScreen" class="screen tbc-screen">
+      <h1>To be continued in Chapter 3<br /><span>(NEVER LMAO)</span></h1>
+    </section>
+
+    <section id="leaderboardScreen" class="screen leaderboard-screen">
+      <div class="leaderboard-panel">
+        <h1>Progress Saved.</h1>
+        <h2>Top 10 Fastest Clears</h2>
+        <table>
+          <thead>
+            <tr><th>Rank</th><th>Name</th><th>Clear Time</th><th>Turns</th></tr>
+          </thead>
+          <tbody id="leaderboardBody"></tbody>
+        </table>
+        <p class="thanks">Thank you for playing!<br /><strong>Coming never!</strong></p>
+        <button id="returnLandingBtn">Return to First Screen</button>
+      </div>
+    </section>
+
+    <section id="videoOverlay" class="video-overlay hidden">
+      <video id="freedomVideo" src="assets/video/freedoms_advance_placeholder.mp4"></video>
+    </section>
+  </main>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

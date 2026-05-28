@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /leaderboard/{scoreId} {
+      // Public leaderboard: anyone can view the Top 10.
+      allow read: if true;
+
+      // Players can only create score records with the exact fields the game uses.
+      allow create: if
+        request.resource.data.keys().hasOnly(['playerName', 'clearTime', 'turns', 'createdAt']) &&
+        request.resource.data.playerName is string &&
+        request.resource.data.playerName.size() >= 1 &&
+        request.resource.data.playerName.size() <= 16 &&
+        request.resource.data.clearTime is number &&
+        request.resource.data.clearTime > 0 &&
+        request.resource.data.clearTime < 3600 &&
+        request.resource.data.turns is int &&
+        request.resource.data.turns >= 0 &&
+        request.resource.data.turns < 999 &&
+        request.resource.data.createdAt == request.time;
+
+      // No one can edit or delete submitted clears from the browser.
+      allow update, delete: if false;
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
